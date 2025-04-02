@@ -53,7 +53,7 @@ public:
 		DiscordCreateParams Params;
 		DiscordCreateParamsSetDefault(&Params);
 
-		Params.client_id = 1325361453988970527; // TClient
+		Params.client_id = 1356995122461544689; // Cloud
 		Params.flags = EDiscordCreateFlags::DiscordCreateFlags_NoRequireDiscord;
 		Params.event_data = this;
 		Params.activity_events = &m_ActivityEvents;
@@ -94,10 +94,12 @@ public:
 	{
 		mem_zero(&m_Activity, sizeof(DiscordActivity));
 
-		str_copy(m_Activity.assets.large_image, "tclient_logo", sizeof(m_Activity.assets.large_image));
-		str_copy(m_Activity.assets.large_text, "TClient logo", sizeof(m_Activity.assets.large_text));
+		str_copy(m_Activity.assets.large_image, "cloud", sizeof(m_Activity.assets.large_image));
+		str_copy(m_Activity.assets.large_text, "Cloud Client v1.0", sizeof(m_Activity.assets.large_text));
 		m_Activity.timestamps.start = time_timestamp();
-		str_copy(m_Activity.details, "Offline", sizeof(m_Activity.details));
+		str_copy(m_Activity.assets.small_image, "fat_offline", sizeof(m_Activity.assets.large_image));
+		str_copy(m_Activity.details, "In Main Menu", sizeof(m_Activity.details));
+		str_copy(m_Activity.assets.small_text, "Offline", sizeof(m_Activity.assets.large_text));
 		m_Activity.instance = false;
 
 		m_UpdateActivity = true;
@@ -107,9 +109,11 @@ public:
 	{
 		mem_zero(&m_Activity, sizeof(DiscordActivity));
 
-		str_copy(m_Activity.assets.large_image, "tclient_logo", sizeof(m_Activity.assets.large_image));
-		str_copy(m_Activity.assets.large_text, "TClient logo", sizeof(m_Activity.assets.large_text));
+		str_copy(m_Activity.assets.large_image, "cloud", sizeof(m_Activity.assets.large_image));
+		str_copy(m_Activity.assets.large_text, "Cloud Client v1.0", sizeof(m_Activity.assets.large_text));
 		m_Activity.timestamps.start = time_timestamp();
+		str_copy(m_Activity.assets.small_image, "fat_online", sizeof(m_Activity.assets.large_image));
+		str_copy(m_Activity.assets.small_text, "Online", sizeof(m_Activity.assets.large_text));
 		str_copy(m_Activity.name, "Online", sizeof(m_Activity.name));
 		m_Activity.instance = true;
 
@@ -223,10 +227,10 @@ class CDiscordStub : public IDiscord
 	void UpdatePlayerCount(int Count) override {}
 };
 
-IDiscord *CreateDiscord(bool UseStub)
+IDiscord *CreateDiscord()
 {
 	IDiscord *pDiscord = CreateDiscordImpl();
-	if(pDiscord && !UseStub)
+	if(pDiscord)
 	{
 		return pDiscord;
 	}

@@ -4893,7 +4893,7 @@ int main(int argc, const char **argv)
 	pKernel->RegisterInterface(pEngineMap); // IEngineMap
 	pKernel->RegisterInterface(static_cast<IMap *>(pEngineMap), false);
 
-	IDiscord *pDiscord = CreateDiscord(!g_Config.m_ClDiscordRPC);
+	IDiscord *pDiscord = CreateDiscord();
 	pKernel->RegisterInterface(pDiscord);
 
 	ISteam *pSteam = CreateSteam();

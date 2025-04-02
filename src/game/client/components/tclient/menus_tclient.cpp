@@ -1651,14 +1651,30 @@ void CMenus::RenderSettingsInfo(CUIRect MainView)
 	// =======RIGHT VIEW========
 
 	RightView.HSplitTop(HeadlineHeight, &Label, &RightView);
-	Ui()->DoLabel(&Label, TCLocalize("TClient Developers"), HeadlineFontSize, TEXTALIGN_ML);
+	Ui()->DoLabel(&Label, TCLocalize("Cloud Developers"), HeadlineFontSize, TEXTALIGN_ML);
 	RightView.HSplitTop(MarginSmall, nullptr, &RightView);
 	RightView.HSplitTop(MarginSmall, nullptr, &RightView);
 
 	const float TeeSize = 50.0f;
 	const float CardSize = TeeSize + MarginSmall;
-	CUIRect TeeRect, DevCardRect;
-	static CButtonContainer s_LinkButton1, s_LinkButton2, s_LinkButton3, s_LinkButton4;
+	CUIRect TeeRect, DevCardRect, CDevCardRect;
+	static CButtonContainer s_LinkButton1, s_LinkButton2, s_LinkButton3, s_LinkButton4, s_LinkButton5;
+	{
+		RightView.HSplitTop(CardSize, &CDevCardRect, &RightView);
+		CDevCardRect.VSplitLeft(CardSize, &TeeRect, &Label);
+		Label.VSplitLeft(TextRender()->TextWidth(LineSize, "PKP Intercity"), &Label, &Button);
+		Button.VSplitLeft(MarginSmall, nullptr, &Button);
+		Button.w = LineSize, Button.h = LineSize, Button.y = Label.y + (Label.h / 2.0f - Button.h / 2.0f);
+		Ui()->DoLabel(&Label, "PKP Intercity", LineSize, TEXTALIGN_ML);
+		if(DoButton_FontIcon(&s_LinkButton5, FONT_ICON_ARROW_UP_RIGHT_FROM_SQUARE, 0, &Button, IGraphics::CORNER_ALL))
+			Client()->ViewLink("https://github.com/sjrc6");
+		RenderDevSkin(TeeRect.Center(), 50.0f, "kitty_pinky", "mermyfox", true, 0, 0, 0, false, ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f), ColorRGBA(1.0f, 1.0f, 1.0f, 1.0f));
+	}
+
+	RightView.HSplitTop(HeadlineHeight, &Label, &RightView);
+	Ui()->DoLabel(&Label, TCLocalize("TClient Developers"), HeadlineFontSize, TEXTALIGN_ML);
+	RightView.HSplitTop(MarginSmall, nullptr, &RightView);
+	RightView.HSplitTop(MarginSmall, nullptr, &RightView);
 	{
 		RightView.HSplitTop(CardSize, &DevCardRect, &RightView);
 		DevCardRect.VSplitLeft(CardSize, &TeeRect, &Label);
@@ -1729,11 +1745,6 @@ void CMenus::RenderSettingsInfo(CUIRect MainView)
 	static int s_ShowStatusBar = IsFlagSet(g_Config.m_ClTClientSettingsTabs, TCLIENT_TAB_STATUSBAR);
 	DoButton_CheckBoxAutoVMarginAndSet(&s_ShowStatusBar, TCLocalize("Status Bar"), &s_ShowStatusBar, &LeftSettings, LineSize);
 	SetFlag(g_Config.m_ClTClientSettingsTabs, TCLIENT_TAB_STATUSBAR, s_ShowStatusBar);
-
-	RightView.HSplitTop(HeadlineHeight, &Label, &RightView);
-	Ui()->DoLabel(&Label, TCLocalize("Integration"), HeadlineFontSize, TEXTALIGN_ML);
-	RightView.HSplitTop(MarginSmall, nullptr, &RightView);
-	DoButton_CheckBoxAutoVMarginAndSet(&g_Config.m_ClDiscordRPC, TCLocalize("Enable Discord Integration"), &g_Config.m_ClDiscordRPC, &RightView, LineSize);
 }
 
 void CMenus::RenderSettingsProfiles(CUIRect MainView)

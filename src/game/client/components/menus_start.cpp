@@ -195,7 +195,7 @@ void CMenus::RenderStartMenu(CUIRect MainView)
 	MainView.HSplitTop(15.0f, &TClientVersion, nullptr);
 	TClientVersion.VSplitRight(40.0f, &TClientVersion, nullptr);
 	char aTBuf[64];
-	str_format(aTBuf, sizeof(aTBuf), "TClient %s", TCLIENT_VERSION);
+	str_format(aTBuf, sizeof(aTBuf), "Cloud %s", TCLIENT_VERSION);
 	Ui()->DoLabel(&TClientVersion, aTBuf, 14.0f, TEXTALIGN_MR);
 
 	static CButtonContainer s_ConsoleButton;
